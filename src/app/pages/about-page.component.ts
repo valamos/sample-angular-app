@@ -3,17 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   standalone: true,
   selector: 'app-about-page',
-  template: `
-    <section class="card">
-      <h2>About This App</h2>
-      <p>
-        Sample Angular App is a minimal starting point for a multi-page site. It uses Angular's
-        standalone components and the router to keep the structure lightweight and easy to extend.
-      </p>
-      <p>
-        Feel free to customize the layout, styles, and content to match your own project needs.
-      </p>
-    </section>
-  `
+  templateUrl: './about-page.component.html'
 })
 export class AboutPageComponent { }
