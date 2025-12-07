@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
       <h2>Contact</h2>
       <p>We would love to hear from you. Try the following channels:</p>
       <ul>
-        <li>Email: <a href="mailto:hello@example.com">hello@example.com</a></li>
+        <li>Email: <a href="mailto:hello&#64;example.com">hello&#64;example.com</a></li>
         <li>Phone: <a href="tel:+1234567890">(123) 456-7890</a></li>
         <li>Social: Follow us on your favorite platforms.</li>
       </ul>
