@@ -1,13 +1,67 @@
 <section class="card">
   <h2>Upcoming Events</h2>
-  <p>Here are a few ideas for events you could highlight:</p>
-  <ul>
-    <li><strong>Meetups:</strong> Casual gatherings for community members.</li>
-    <li><strong>Workshops:</strong> Hands-on sessions to learn something new.</li>
-    <li><strong>Webinars:</strong> Virtual presentations with live Q&A.</li>
-    <li><strong>Launches:</strong> Product updates or milestone celebrations.</li>
-  </ul>
-  <p>
-    Update this list with your own schedule to keep visitors informed about what's happening next.
-  </p>
+  <p class="muted">Stay in the loop with what's coming next.</p>
+
+  <div *ngIf="events.length; else emptyState" class="event-list">
+    <article class="event" *ngFor="let event of events; index as i">
+      <div>
+        <div class="event__title">{{ event.title }}</div>
+        <div class="event__meta">
+          <span>{{ event.date | date: 'fullDate' }}</span>
+          <span class="bullet">•</span>
+          <span>{{ event.location }}</span>
+        </div>
+        <p class="event__description" *ngIf="event.description">{{ event.description }}</p>
+      </div>
+      <button type="button" class="link-button" (click)="removeEvent(i)">Remove</button>
+    </article>
+  </div>
+
+  <ng-template #emptyState>
+    <p class="muted">No events scheduled yet. Add one below to get started.</p>
+  </ng-template>
+</section>
+
+<section class="card">
+  <h2>Add an Event</h2>
+  <form class="form" (ngSubmit)="addEvent()">
+    <label class="field">
+      <span>Title</span>
+      <input
+        type="text"
+        name="title"
+        [(ngModel)]="newEvent.title"
+        placeholder="Community Gathering"
+        required
+      />
+    </label>
+
+    <label class="field">
+      <span>Date</span>
+      <input type="date" name="date" [(ngModel)]="newEvent.date" required />
+    </label>
+
+    <label class="field">
+      <span>Location</span>
+      <input
+        type="text"
+        name="location"
+        [(ngModel)]="newEvent.location"
+        placeholder="Main Hall"
+        required
+      />
+    </label>
+
+    <label class="field">
+      <span>Description (optional)</span>
+      <textarea
+        name="description"
+        rows="3"
+        [(ngModel)]="newEvent.description"
+        placeholder="What should attendees expect?"
+      ></textarea>
+    </label>
+
+    <button class="primary" type="submit">Add Event</button>
+  </form>
 </section>
