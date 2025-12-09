@@ -1,12 +1,46 @@
 <section class="card">
   <h2>Contact</h2>
-  <p>We would love to hear from you. Try the following channels:</p>
-  <ul>
-    <li>Email: <a href="mailto:hello&#64;example.com">hello&#64;example.com</a></li>
-    <li>Phone: <a href="tel:+1234567890">(123) 456-7890</a></li>
-    <li>Social: Follow us on your favorite platforms.</li>
-  </ul>
-  <p>
-    Replace these placeholders with your real contact details to make this page your own.
-  </p>
+  <p>We would love to hear from you. Tell us how we can help and we'll respond soon.</p>
+
+  <form class="form" (ngSubmit)="submitForm()" #contactForm="ngForm">
+    <div class="field">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        required
+        [(ngModel)]="formData.name"
+        placeholder="Your full name"
+      />
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        required
+        [(ngModel)]="formData.email"
+        placeholder="you@example.com"
+      />
+    </div>
+
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea
+        id="message"
+        name="message"
+        rows="5"
+        required
+        [(ngModel)]="formData.message"
+        placeholder="How can we help?"
+      ></textarea>
+    </div>
+
+    <button class="primary" type="submit" [disabled]="contactForm.invalid">Send message</button>
+
+    <p *ngIf="submittedMessage" class="muted">{{ submittedMessage }}</p>
+  </form>
 </section>

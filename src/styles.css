@@ -149,6 +149,7 @@ nav a:hover {
   gap: 0.35rem;
 }
 
+.field label,
 .field span {
   font-weight: 600;
   color: #111827;
