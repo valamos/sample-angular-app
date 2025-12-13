@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -16,7 +16,21 @@ export class ContactPageComponent {
 
   submittedMessage = '';
 
-  submitForm(): void {
-    this.submittedMessage = `Thanks, ${this.formData.name || 'friend'}! We'll be in touch soon.`;
+  submitForm(form: NgForm): void {
+    if (form.invalid) {
+      Object.values(form.controls).forEach(control => {
+        control.markAsTouched();
+        control.updateValueAndValidity();
+      });
+      this.submittedMessage = '';
+      return;
+    }
+
+    const trimmedName = this.formData.name.trim();
+    const trimmedEmail = this.formData.email.trim();
+
+    this.submittedMessage = `Thanks, ${trimmedName || 'friend'}! We'll be in touch at ${trimmedEmail}.`;
+
+    form.resetForm();
   }
 }
