@@ -2,7 +2,7 @@
   <h2>Contact</h2>
   <p>We would love to hear from you. Tell us how we can help and we'll respond soon.</p>
 
-  <form class="form" (ngSubmit)="submitForm()" #contactForm="ngForm">
+  <form class="form" (ngSubmit)="submitForm(contactForm)" #contactForm="ngForm" novalidate>
     <div class="field">
       <label for="name">Name</label>
       <input
@@ -10,9 +10,14 @@
         name="name"
         type="text"
         required
+        minlength="2"
         [(ngModel)]="formData.name"
         placeholder="Your full name"
+        #nameModel="ngModel"
       />
+      <p class="error" *ngIf="nameModel.invalid && (nameModel.touched || contactForm.submitted)">
+        Please tell us your name (at least 2 characters).
+      </p>
     </div>
 
     <div class="field">
@@ -24,7 +29,11 @@
         required
         [(ngModel)]="formData.email"
         placeholder="you@example.com"
+        #emailModel="ngModel"
       />
+    <p class="error" *ngIf="emailModel.invalid && (emailModel.touched || contactForm.submitted)">
+        Please enter a valid email address so we can reply.
+      </p>
     </div>
 
     <div class="field">
@@ -34,13 +43,41 @@
         name="message"
         rows="5"
         required
+        minlength="10"
         [(ngModel)]="formData.message"
         placeholder="How can we help?"
+        #messageModel="ngModel"
       ></textarea>
+      <p class="error" *ngIf="messageModel.invalid && (messageModel.touched || contactForm.submitted)">
+        Please share a little more detail (at least 10 characters).
+      </p>
     </div>
 
-    <button class="primary" type="submit" [disabled]="contactForm.invalid">Send message</button>
+    <div class="status" *ngIf="submittedMessage || submitError">
+      <p class="success" *ngIf="submittedMessage">{{ submittedMessage }}</p>
+      <p class="error" *ngIf="submitError">{{ submitError }}</p>
+    </div>
 
-    <p *ngIf="submittedMessage" class="muted">{{ submittedMessage }}</p>
+    <button class="primary" type="submit" [disabled]="contactForm.invalid || sending">
+      {{ sending ? 'Sending...' : 'Send message' }}
+    </button>
   </form>
+
+  <section class="submissions" *ngIf="submissions.length">
+    <h3>Recent submissions</h3>
+    <p class="muted">We keep your most recent messages here for reference.</p>
+    <ul class="submission-list">
+      <li class="submission" *ngFor="let submission of submissions">
+        <div>
+          <p class="submission__meta">
+            <strong>{{ submission.name }}</strong>
+            <span class="bullet">•</span>
+            <span>{{ submission.email }}</span>
+          </p>
+          <p class="submission__message">{{ submission.message }}</p>
+        </div>
+        <span class="submission__time">{{ submission.submittedAt | date:'short' }}</span>
+      </li>
+    </ul>
+  </section>
 </section>
