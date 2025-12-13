@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-contact-page',
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './contact-page.component.html'
 })
 export class ContactPageComponent {
