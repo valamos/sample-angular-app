@@ -169,6 +169,22 @@ nav a:hover {
   resize: vertical;
 }
 
+.field .invalid {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.error {
+  color: #b91c1c;
+  margin: -0.2rem 0 0;
+  font-weight: 600;
+}
+
+.success {
+  color: #0f766e;
+  font-weight: 700;
+}
+
 .primary {
   background: var(--primary);
   color: white;

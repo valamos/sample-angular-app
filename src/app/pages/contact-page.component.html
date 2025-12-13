@@ -2,7 +2,7 @@
   <h2>Contact</h2>
   <p>We would love to hear from you. Tell us how we can help and we'll respond soon.</p>
 
-  <form class="form" (ngSubmit)="submitForm()" #contactForm="ngForm">
+  <form class="form" (ngSubmit)="submitForm(contactForm)" #contactForm="ngForm" novalidate>
     <div class="field">
       <label for="name">Name</label>
       <input
@@ -11,8 +11,13 @@
         type="text"
         required
         [(ngModel)]="formData.name"
+        #nameModel="ngModel"
+        [class.invalid]="nameModel.invalid && (nameModel.touched || contactForm.submitted)"
         placeholder="Your full name"
       />
+      <p class="error" *ngIf="nameModel.errors && (nameModel.touched || contactForm.submitted)">
+        Name is required.
+      </p>
     </div>
 
     <div class="field">
@@ -23,8 +28,15 @@
         type="email"
         required
         [(ngModel)]="formData.email"
+        email
+        #emailModel="ngModel"
+        [class.invalid]="emailModel.invalid && (emailModel.touched || contactForm.submitted)"
         placeholder="you@example.com"
       />
+      <p class="error" *ngIf="emailModel.errors && (emailModel.touched || contactForm.submitted)">
+        <span *ngIf="emailModel.errors['required']">Email is required.</span>
+        <span *ngIf="emailModel.errors['email']">Enter a valid email address.</span>
+      </p>
     </div>
 
     <div class="field">
@@ -35,12 +47,17 @@
         rows="5"
         required
         [(ngModel)]="formData.message"
+        #messageModel="ngModel"
+        [class.invalid]="messageModel.invalid && (messageModel.touched || contactForm.submitted)"
         placeholder="How can we help?"
       ></textarea>
+      <p class="error" *ngIf="messageModel.errors && (messageModel.touched || contactForm.submitted)">
+        Message is required.
+      </p>
     </div>
 
     <button class="primary" type="submit" [disabled]="contactForm.invalid">Send message</button>
 
-    <p *ngIf="submittedMessage" class="muted">{{ submittedMessage }}</p>
+    <p *ngIf="submittedMessage" class="success">{{ submittedMessage }}</p>
   </form>
 </section>
