@@ -2,66 +2,70 @@
   <h2>Contact</h2>
   <p>We would love to hear from you. Tell us how we can help and we'll respond soon.</p>
 
-  <form class="form" #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)" novalidate>
-    <div class="field">
-      <label for="name">Name</label>
-      <input
-        id="name"
-        name="name"
-        type="text"
-        required
-        minlength="2"
-        [(ngModel)]="formData.name"
-        #name="ngModel"
-        placeholder="Your full name"
-        [class.invalid]="name.invalid && (name.dirty || name.touched)"
-      />
-      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error">
-        <span *ngIf="name.errors?.['required']">Please tell us your name.</span>
-        <span *ngIf="name.errors?.['minlength']">Name must be at least 2 characters.</span>
+  <ng-container *ngIf="!submitted; else submittedState">
+    <form class="form" #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)" novalidate>
+      <div class="field">
+        <label for="name">Name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          minlength="2"
+          [(ngModel)]="formData.name"
+          #name="ngModel"
+          placeholder="Your full name"
+          [class.invalid]="name.invalid && (name.dirty || name.touched)"
+        />
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error">
+          <span *ngIf="name.errors?.['required']">Please tell us your name.</span>
+          <span *ngIf="name.errors?.['minlength']">Name must be at least 2 characters.</span>
+        </div>
       </div>
-    </div>
 
-    <div class="field">
-      <label for="email">Email</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        required
-        email
-        [(ngModel)]="formData.email"
-        #email="ngModel"
-        placeholder="you@example.com"
-        [class.invalid]="email.invalid && (email.dirty || email.touched)"
-      />
-      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-        <span *ngIf="email.errors?.['required']">Email is required.</span>
-        <span *ngIf="email.errors?.['email']">Enter a valid email address.</span>
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          email
+          [(ngModel)]="formData.email"
+          #email="ngModel"
+          placeholder="you@example.com"
+          [class.invalid]="email.invalid && (email.dirty || email.touched)"
+        />
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+          <span *ngIf="email.errors?.['required']">Email is required.</span>
+          <span *ngIf="email.errors?.['email']">Enter a valid email address.</span>
+        </div>
       </div>
-    </div>
 
-    <div class="field">
-      <label for="message">Message</label>
-      <textarea
-        id="message"
-        name="message"
-        rows="5"
-        required
-        minlength="10"
-        [(ngModel)]="formData.message"
-        #message="ngModel"
-        placeholder="How can we help?"
-        [class.invalid]="message.invalid && (message.dirty || message.touched)"
-      ></textarea>
-      <div *ngIf="message.invalid && (message.dirty || message.touched)" class="error">
-        <span *ngIf="message.errors?.['required']">Please include a message.</span>
-        <span *ngIf="message.errors?.['minlength']">Message must be at least 10 characters.</span>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="5"
+          required
+          minlength="10"
+          [(ngModel)]="formData.message"
+          #message="ngModel"
+          placeholder="How can we help?"
+          [class.invalid]="message.invalid && (message.dirty || message.touched)"
+        ></textarea>
+        <div *ngIf="message.invalid && (message.dirty || message.touched)" class="error">
+          <span *ngIf="message.errors?.['required']">Please include a message.</span>
+          <span *ngIf="message.errors?.['minlength']">Message must be at least 10 characters.</span>
+        </div>
       </div>
-    </div>
 
-    <button class="primary" type="submit" [disabled]="contactForm.invalid">Send message</button>
+      <button class="primary" type="submit" [disabled]="contactForm.invalid">Send message</button>
+    </form>
+  </ng-container>
 
-    <p *ngIf="submittedMessage" class="success">{{ submittedMessage }}</p>
-  </form>
+  <ng-template #submittedState>
+    <p class="success" role="status">{{ submittedMessage }}</p>
+  </ng-template>
 </section>

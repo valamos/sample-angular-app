@@ -15,6 +15,7 @@ export class ContactPageComponent {
   };
 
   submittedMessage = '';
+  submitted = false;
 
   submitForm(form: NgForm): void {
     if (form.invalid) {
@@ -23,6 +24,7 @@ export class ContactPageComponent {
         control.updateValueAndValidity();
       });
       this.submittedMessage = '';
+      this.submitted = false;
       return;
     }
 
@@ -32,5 +34,6 @@ export class ContactPageComponent {
     this.submittedMessage = `Thanks, ${trimmedName || 'friend'}! We'll be in touch at ${trimmedEmail}.`;
 
     form.resetForm();
+    this.submitted = true;
   }
 }
